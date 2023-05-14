@@ -1,0 +1,193 @@
+# Ansible
+## retry files
+*.retry
+*.tmp
+.ansible*
+meta/.galaxy_install_info
+
+# Artefacts
+*-build/
+.cache
+.coverage
+build/
+dist/
+release/
+
+# Backup files
+*.bak*
+*.bkp*
+*.svn
+*.tmp*
+*hist
+*~
+.*hist
+.\#*
+.tags
+\#*
+tags
+
+# chef
+.kitchen/
+.kitchen*.yml
+.kitchen*.yaml
+
+# Compiled source
+*.a
+*.app
+*.bin
+*.class
+*.com
+*.def
+*.dll
+*.dylib
+*.elf
+*.exe
+*.exe~
+*.exp
+*.gch
+*.hex
+*.i*86
+*.ko
+*.la
+*.lib
+*.lo
+*.o
+*.obj
+*.out
+*.pch
+*.so
+*.so.*
+*.x86*64
+
+# core dumps
+core
+crash.*
+
+# Databases
+*.db
+*.mdf
+
+# dotfiles
+.config/submodules/
+.config/tmux/plugins/
+.config/vim/bundle/*
+.luarc.json
+.vim/bundle/
+plugin/*compiled*
+submodules/
+
+# ebooks
+*.epub
+*.mobi
+*.pdf
+
+# editor
+*tags
+*.sw*
+
+# git submodules
+.submodules/
+submodules/
+.bundle/
+
+# go
+vendor/
+go.work
+*.text
+
+# Logs
+*.debug
+*.log
+*debug*log*
+log/
+logs/
+
+# node
+node_modules/
+
+# OS generated files
+.DS_Store?
+._*
+Icon?
+Thumbs.db
+ehthumbs.db
+~$*
+
+# Packages
+*.7z
+*.bin
+*.dmg
+*.gz
+*.gzip
+*.iso
+*.jar
+*.rar
+*.tar
+*.tar.*
+*.tbz
+*.tgz
+*.zip
+
+# Python
+*.egg-info
+*.pyc
+*py*cache*
+.eggs
+.tox
+__pycache__/
+
+# Project
+*_cache
+*.lock
+*.lck
+*.pid
+pidfile
+.project
+
+# Secrets
+*.pass
+*credentials*
+*password*
+.ENV
+.env
+
+# Terraform
+## Local .terraform directories
+.terraform
+.terraform/*
+## Terraform lock files
+**/.*terraform*lock.hcl
+## .tfstate files
+*.tfstate
+*.tfstate.*
+## Crash log files
+crash.log
+crash.*.log
+## Exclude all .tfvars files, which are likely to contain sensitive data, such as
+## password, private keys, and other secrets. These should not be part of version
+## control as they are data points which are potentially sensitive and subject
+## to change depending on the environment.
+*.tfvars
+*.tfvars.json
+## Ignore override files as they are usually used to override resources locally and so
+## are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+## Include override files you do wish to add to version control using negated pattern
+## !example_override.tf
+## Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+## example: *tfplan*
+**/*tfplan*
+## Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# vagrant and packer
+.vagrant
+*.box
+*pkrvars*
+
+# This repository's ignores
+target
