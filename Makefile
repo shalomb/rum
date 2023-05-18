@@ -1,8 +1,24 @@
+#!/usr/bin/make -f console
+
+MAKEFILE          := $(realpath $(lastword $(MAKEFILE_LIST)))
+MAKE              := make
+MAKEFLAGS         += --no-print-directory
+MAKEFLAGS         += --warn-undefined-variables
+
+.ONESHELL:
+SHELL             := /bin/bash
+
+# https://dustinrue.com/2021/08/parameters-in-a-makefile/
+# setup arguments
+RUN_ARGS          := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+# ...and turn them into do-nothing targets
+$(eval $(RUN_ARGS):;@:)
+
 build:
 	@cargo build # $(release)
 
 run: build
-	@RUST_BACKTRACE=1 target/debug/rum
+	@RUST_BACKTRACE=1 RUST_LOG=debug,main=debug target/debug/rum $(RUN_ARGS)
 
 test:
 	sqlite3 ~/.cache/rum.db -cmd '.schema' 'drop table paths;'
