@@ -1,4 +1,4 @@
-[![MIT licensed][mit-badge]][mit-url]
+!\[first rust-endeavour\](https://badgen.net/badge/first/rust-endeavour/red?icon=rust)
 
 `rum` is a WIP PoC to track and measure _frecently_-used files/directories.
 The aim is for a small/fast tool that can integrate into editors, fzf, etc.

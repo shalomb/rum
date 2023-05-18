@@ -1,17 +1,16 @@
 // use itertools::Itertools;
 extern crate rusqlite;
 
+use dirs;
 use log::{info, warn};
+use procfs::process::{all_processes, Process};
 use rusqlite::Connection; // Result};
 use std::collections::HashMap;
+use std::error::Error;
 use std::path::Path; //, PathBuf};
+use std::process::Command;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use procfs::process::{all_processes, Process};
-
-use dirs;
-
-use std::process::Command;
 // use procinfo::pid::cwd;
 
 // fn type_of<T>(_: &T) -> &str {
@@ -28,7 +27,7 @@ struct Proc {
     path: String,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let db_file = Path::new(&dirs::cache_dir().unwrap()).join("rum.db");
     println!("db_file: {:?}", db_file);
     let conn = Connection::open(db_file).unwrap();
@@ -38,9 +37,11 @@ fn main() {
     let _update_cwds = update_cwds(&conn, &ps_table);
     let _prune_stale_paths = prune_stale_paths(&conn);
     let _update_project_dirs = update_project_dirs(&conn);
+
+    Ok(())
 }
 
-fn update_cwds(conn: &Connection, ps_table: &Vec<Proc>) -> bool {
+fn update_cwds(conn: &Connection, ps_table: &Vec<Proc>) -> Result<(), Box<dyn Error>> {
     let mut dirs = Vec::<String>::new();
 
     for proc in ps_table {
@@ -79,10 +80,10 @@ fn update_cwds(conn: &Connection, ps_table: &Vec<Proc>) -> bool {
         .expect("Unable to update cwds");
     }
 
-    return true;
+    Ok(())
 }
 
-fn prune_stale_paths(conn: &Connection) -> bool {
+fn prune_stale_paths(conn: &Connection) -> Result<(), Box<dyn Error>> {
     let mut stmt = conn
         .prepare(
             "
@@ -114,12 +115,13 @@ fn prune_stale_paths(conn: &Connection) -> bool {
             .ok();
         }
     }
-    return true;
+
+    Ok(())
 }
 
-fn update_project_dirs(conn: &Connection) -> bool {
+fn update_project_dirs(conn: &Connection) -> Result<(), Box<dyn Error>> {
     let command = Command::new("find")
-        .args(["-L", "/home/unop/.config/", "-name", ".git", "-type", "d"])
+        .args(["-L", "/home/unop/oneTakeda/", "-name", ".git", "-type", "d"])
         .current_dir("/home/unop/")
         .env("FOO", "bar")
         .output()
@@ -157,10 +159,11 @@ fn update_project_dirs(conn: &Connection) -> bool {
         )
         .expect("hmm");
     }
-    return true;
+
+    Ok(())
 }
 
-fn create_db(conn: &Connection) -> bool {
+fn create_db(conn: &Connection) -> Result<(), Box<dyn Error>> {
     println!("{:?}", "Creating db");
     let create_query = "
         create table if not exists paths
@@ -169,11 +172,9 @@ fn create_db(conn: &Connection) -> bool {
              remote text
              );
     ";
-    let foo = conn
-        .execute(create_query, [])
+    conn.execute(create_query, [])
         .expect("Unable to create database");
-    println!("foo: {:?}", foo);
-    return true;
+    Ok(())
 }
 
 fn get_ps_table() -> Vec<Proc> {
