@@ -10,7 +10,11 @@ $ make build run
 
 # Most frecently used git repositories
 
-$ litecli ~/.cache/rum.db -t -e 'select * from paths where score > 0.2 and remote is not null order by score desc'
+$ litecli ~/.cache/rum.db -t -e '
+    select * from paths
+      where score > 0.2 and
+      remote is not null
+    order by score desc'
 +----------------------------------------------------+--------------------+-----------------------------------------------------------------+
 | path                                               | score              | remote                                                          |
 +----------------------------------------------------+--------------------+-----------------------------------------------------------------+
